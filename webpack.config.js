@@ -20,10 +20,18 @@ var common = {
 
   module: {
     loaders: [
+      /* css */
       {
         test: /\.css$/,
         loaders: ['style', 'css'], // Applied from right to left.
         include: PATHS.app // Specify target directory.
+      },
+
+      /* js(x) */
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel'],
+        include: PATHS.app
       }
     ]
   },
