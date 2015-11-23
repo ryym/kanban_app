@@ -13,6 +13,11 @@ const PATHS = {
 var common = {
   entry: PATHS.app,
 
+  // Enable 'jsx' extension.
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+
   output: {
     path: PATHS.build,
     filename: 'bundle.js'
