@@ -9,6 +9,9 @@ const PATHS = {
   build: path.join(__dirname, 'build')
 };
 
+// Set the babel's environment variable.
+process.env.BABEL_ENV = TARGET;
+
 // Common configuration.
 var common = {
   entry: PATHS.app,
