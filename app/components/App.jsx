@@ -37,7 +37,8 @@ export default class App extends React.Component {
     //  `constructor()`でバインドだけする方法を取る事にする。
     u.bindMethodContexts(this, [
       'addNote',
-      'editNote'
+      'editNote',
+      'deleteNote'
     ]);
   }
 
@@ -46,7 +47,7 @@ export default class App extends React.Component {
     return (
       <div>
         <button className="add-note" onClick={this.addNote}>+</button>
-        <Notes items={notes} onEdit={this.editNote} />
+        <Notes items={notes} onEdit={this.editNote} onDelete={this.deleteNote} />
       </div>
     );
   }
@@ -70,6 +71,17 @@ export default class App extends React.Component {
       return;
     }
     notes[editedIdx].task = task;
+    this.setState({notes});
+  }
+
+  deleteNote(noteId, task) {
+    const notes = this.state.notes;
+    const removedIdx = this.findNoteIdx(noteId);
+    if (removedIdx < 0) {
+      console.warn('Failed to find note', notes, id);
+      return;
+    }
+    notes.splice(removedIdx, 1);
     this.setState({notes});
   }
 
