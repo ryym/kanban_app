@@ -1,11 +1,14 @@
 import React from 'react';
 import Note from './Note.jsx';
+import * as u from '../util.js';
 
 export default class Notes extends React.Component {
   constructor(props) {
     super(props);
 
-    this.renderNote = this.renderNote.bind(this);
+    u.bindMethodContexts(this, [
+      'renderNote'
+    ]);
   }
 
   render() {

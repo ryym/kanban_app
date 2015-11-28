@@ -1,4 +1,5 @@
 import React from 'react';
+import * as u from '../util.js';
 
 export default class Note extends React.Component {
   constructor(props) {
@@ -8,19 +9,13 @@ export default class Note extends React.Component {
       editing: false
     }
 
-    this._bindThisContextTo([
-      "renderEdit",
-      "renderTask",
-      "edit",
-      "finishEdit",
-      "checkEnter"
+    u.bindMethodContexts(this, [
+      'renderEdit',
+      'renderTask',
+      'edit',
+      'finishEdit',
+      'checkEnter'
     ]);
-  }
-
-  _bindThisContextTo(methods) {
-    methods.forEach((method) => {
-      this[method] = this[method].bind(this);
-    })
   }
 
   render() {

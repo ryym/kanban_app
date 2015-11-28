@@ -1,6 +1,7 @@
 import uuid from 'node-uuid';
 import React from 'react';
 import Notes from './Notes.jsx';
+import * as u from '../util.js';
 
 
 export default class App extends React.Component {
@@ -34,8 +35,10 @@ export default class App extends React.Component {
     //  っぽい。`constructor()`の変更は Hot-loading で自動更新できず、ページごと
     //  再読み込みする必要がある。`addNote`の変更もやはり自動更新されないので、ひとまず
     //  `constructor()`でバインドだけする方法を取る事にする。
-    this.addNote = this.addNote.bind(this);
-    this.editNote = this.editNote.bind(this);
+    u.bindMethodContexts(this, [
+      'addNote',
+      'editNote'
+    ]);
   }
 
   render() {
