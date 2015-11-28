@@ -35,6 +35,7 @@ export default class App extends React.Component {
     //  再読み込みする必要がある。`addNote`の変更もやはり自動更新されないので、ひとまず
     //  `constructor()`でバインドだけする方法を取る事にする。
     this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
   }
 
   render() {
@@ -42,7 +43,7 @@ export default class App extends React.Component {
     return (
       <div>
         <button className="add-note" onClick={this.addNote}>+</button>
-        <Notes items={notes} />
+        <Notes items={notes} onEdit={this.editNote} />
       </div>
     );
   }
@@ -56,5 +57,21 @@ export default class App extends React.Component {
         }
       ])
     });
+  }
+
+  editNote(noteId, task) {
+    const notes = this.state.notes;
+    const editedIdx = this.findNoteIdx(noteId);
+    if (editedIdx < 0) {
+      console.warn('Failed to find note', notes, id);
+      return;
+    }
+    notes[editedIdx].task = task;
+    this.setState({notes});
+  }
+
+  findNoteIdx(id) {
+    const notes = this.state.notes;
+    return notes.findIndex((note) => note.id === id);
   }
 }
