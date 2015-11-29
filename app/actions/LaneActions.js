@@ -1,5 +1,7 @@
 import alt from '../libs/alt';
 
 export default alt.generateActions(
-  'create'
+  'create',
+  'attachToLane',
+  'dettachFromLane'
 );
