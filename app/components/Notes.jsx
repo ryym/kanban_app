@@ -1,5 +1,6 @@
 import React from 'react';
 import Editable from './Editable.jsx';
+import Note from './Note.jsx';
 import * as u from '../util.js';
 
 export default class Notes extends React.Component {
@@ -23,13 +24,13 @@ export default class Notes extends React.Component {
   renderNote(note) {
     const {onEdit, onDelete} = this.props;
     return (
-      <li className="note" key={note.id}>
+      <Note className="note" id={note.id} key={note.id}>
         <Editable
           value={note.task}
           onEdit={onEdit.bind(null, note.id)}
           onDelete={onDelete.bind(null, note.id)}
         />
-      </li>
+      </Note>
     );
   }
 }
