@@ -6,6 +6,11 @@ class NoteStore {
   constructor() {
     this.bindActions(NoteActions);
     this.notes = [];
+
+    this.exportPublicMethods({
+      getLatestNote: this.getLatestNote.bind(this),
+      get: this.get.bind(this)
+    })
   }
 
   create(note) {
@@ -43,6 +48,17 @@ class NoteStore {
       console.warn('Failed to find note', notes, id);
     }
     return idx;
+  }
+
+  getLatestNote() {
+    const notes = this.notes;
+    return notes.slice(-1)[0];
+  }
+
+  get(ids = []) {
+    return ids
+      .map((id) => this.notes[ this.findNoteIdx(id) ])
+      .filter((note) => note);
   }
 }
 
