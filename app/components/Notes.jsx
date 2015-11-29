@@ -1,6 +1,7 @@
 import React from 'react';
 import Editable from './Editable.jsx';
 import Note from './Note.jsx';
+import LaneActions from '../actions/LaneActions';
 import * as u from '../util.js';
 
 export default class Notes extends React.Component {
@@ -24,7 +25,10 @@ export default class Notes extends React.Component {
   renderNote(note) {
     const {onEdit, onDelete} = this.props;
     return (
-      <Note className="note" id={note.id} key={note.id}>
+      <Note className="note"
+        id={note.id} key={note.id}
+        onMove={LaneActions.move}
+      >
         <Editable
           value={note.task}
           onEdit={onEdit.bind(null, note.id)}
