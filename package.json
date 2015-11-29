@@ -8,6 +8,8 @@
     "start": "webpack-dev-server"
   },
   "dependencies": {
+    "alt": "^0.17.9",
+    "alt-container": "^1.0.0",
     "node-uuid": "^1.4.7",
     "react": "^0.14.3",
     "react-dom": "^0.14.3"

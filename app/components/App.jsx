@@ -1,29 +1,15 @@
 import uuid from 'node-uuid';
 import React from 'react';
 import Notes from './Notes.jsx';
+import NoteActions from '../actions/NoteActions';
+import NoteStore from '../stores/NoteStore';
+import AltContainer from 'alt-container';
 import * as u from '../util.js';
 
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      notes: [
-        {
-          id: uuid.v4(),
-          task: 'Learn Webpack'
-        },
-        {
-          id: uuid.v4(),
-          task: 'Learn React'
-        },
-        {
-          id: uuid.v4(),
-          task: 'Do laundry'
-        }
-      ]
-    };
 
     // NOTE:
     //  `addNote`が実際に呼び出される時、Reactは`this`を自動で
@@ -43,50 +29,30 @@ export default class App extends React.Component {
   }
 
   render() {
-    const notes = this.state.notes;
     return (
       <div>
         <button className="add-note" onClick={this.addNote}>+</button>
-        <Notes items={notes} onEdit={this.editNote} onDelete={this.deleteNote} />
+        <AltContainer
+          stores={[NoteStore]}
+          inject={{
+            items: () => NoteStore.getState().notes
+          }}
+        >
+          <Notes onEdit={this.editNote} onDelete={this.deleteNote} />
+        </AltContainer>
       </div>
     );
   }
 
   addNote() {
-    this.setState({
-      notes: this.state.notes.concat([
-        {
-          id: uuid.v4(),
-          task: 'New task'
-        }
-      ])
-    });
+    NoteActions.create({task: 'New Task'});
   }
 
-  editNote(noteId, task) {
-    const notes = this.state.notes;
-    const editedIdx = this.findNoteIdx(noteId);
-    if (editedIdx < 0) {
-      console.warn('Failed to find note', notes, id);
-      return;
-    }
-    notes[editedIdx].task = task;
-    this.setState({notes});
+  editNote(id, task) {
+    NoteActions.update({id, task});
   }
 
-  deleteNote(noteId, task) {
-    const notes = this.state.notes;
-    const removedIdx = this.findNoteIdx(noteId);
-    if (removedIdx < 0) {
-      console.warn('Failed to find note', notes, id);
-      return;
-    }
-    notes.splice(removedIdx, 1);
-    this.setState({notes});
-  }
-
-  findNoteIdx(id) {
-    const notes = this.state.notes;
-    return notes.findIndex((note) => note.id === id);
+  deleteNote(id) {
+    NoteActions.delete(id);
   }
 }

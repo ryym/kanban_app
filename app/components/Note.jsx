@@ -15,7 +15,8 @@ export default class Note extends React.Component {
       'renderDelete',
       'edit',
       'finishEdit',
-      'checkEnter'
+      'checkEnter',
+      'onDelete',
     ]);
   }
 
@@ -50,7 +51,7 @@ export default class Note extends React.Component {
 
   renderDelete() {
     return (
-      <button className="delete" onClick={this.props.onDelete}>x</button>
+      <button className="delete" onClick={this.onDelete}>x</button>
     );
   }
 
@@ -71,5 +72,11 @@ export default class Note extends React.Component {
     this.setState({
       editing: false
     });
+  }
+
+  onDelete(e) {
+    // edit() を発火しないようにする。
+    e.stopPropagation();
+    this.props.onDelete(e);
   }
 }
