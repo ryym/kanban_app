@@ -5,7 +5,8 @@
   "homepage": "http://survivejs.com/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "webpack"
   },
   "dependencies": {
     "alt": "^0.17.9",

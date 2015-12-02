@@ -77,3 +77,31 @@ if (TARGET === 'start' || ! TARGET) {
     ]
   });
 }
+
+// For production.
+if (TARGET === 'build') {
+  module.exports = merge(common, {
+    output: {
+      path: PATHS.build,
+      filename: 'bundle.js'
+    },
+
+    devtool: 'source-map',
+
+    plugins: [
+      // Replace environment variables (NODE_ENV) in sources
+      // with the specified values ("production").
+      new webpack.DefinePlugin({
+        // The value of 'NODE_ENV' affects React lib size.
+        // see: https://facebook.github.io/react/downloads.html
+        //      http://qiita.com/hokaccha/items/474d011473eeba8dd416
+        'process.env.NODE_ENV': JSON.stringify('production')
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      })
+    ]
+  });
+}
