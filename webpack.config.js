@@ -1,5 +1,6 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var Clean = require('clean-webpack-plugin');
 var webpack = require('webpack');
 var merge = require('webpack-merge');
 var pkg = require('./package.json');
@@ -95,6 +96,8 @@ if (TARGET === 'build') {
     devtool: 'source-map',
 
     plugins: [
+      new Clean(['build']),
+
       // Replace environment variables (NODE_ENV) in sources
       // with the specified values ("production").
       new webpack.DefinePlugin({
