@@ -2,6 +2,7 @@ var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 var merge = require('webpack-merge');
+var pkg = require('./package.json');
 
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
@@ -14,16 +15,9 @@ process.env.BABEL_ENV = TARGET;
 
 // Common configuration.
 var common = {
-  entry: PATHS.app,
-
   // Enable 'jsx' extension.
   resolve: {
     extensions: ['', '.js', '.jsx']
-  },
-
-  output: {
-    path: PATHS.build,
-    filename: 'bundle.js'
   },
 
   module: {
@@ -53,6 +47,13 @@ var common = {
 
 if (TARGET === 'start' || ! TARGET) {
   module.exports = merge(common, {
+    entry: PATHS.app,
+
+    output: {
+      path: PATHS.build,
+      filename: 'bundle.js'
+    },
+
     // devtool: 'eval-source-map',
     devtool: 'eval',
 
@@ -81,9 +82,14 @@ if (TARGET === 'start' || ! TARGET) {
 // For production.
 if (TARGET === 'build') {
   module.exports = merge(common, {
+    entry: {
+      app: PATHS.app,
+      vendor: Object.keys(pkg.dependencies)
+    },
+
     output: {
       path: PATHS.build,
-      filename: 'bundle.js'
+      filename: '[name].[chunkhash].js'
     },
 
     devtool: 'source-map',
@@ -97,10 +103,16 @@ if (TARGET === 'build') {
         //      http://qiita.com/hokaccha/items/474d011473eeba8dd416
         'process.env.NODE_ENV': JSON.stringify('production')
       }),
+
       new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: false
         }
+      }),
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: '[name].[chunkhash].js'
       })
     ]
   });
