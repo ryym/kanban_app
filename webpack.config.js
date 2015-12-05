@@ -87,8 +87,10 @@ if (TARGET === 'start' || ! TARGET) {
   });
 }
 
-// For production.
-if (TARGET === 'build') {
+// For production and stats.
+// To analize bundles, upload stats.json to
+// 'http://webpack.github.io/analyse/'.
+if (TARGET === 'build' || TARGET === 'stats') {
   module.exports = merge(common, {
     entry: {
       app: PATHS.app,
