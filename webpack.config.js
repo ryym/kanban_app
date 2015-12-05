@@ -1,5 +1,6 @@
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var Clean = require('clean-webpack-plugin');
 var webpack = require('webpack');
 var merge = require('webpack-merge');
@@ -23,13 +24,6 @@ var common = {
 
   module: {
     loaders: [
-      /* css */
-      {
-        test: /\.css$/,
-        loaders: ['style', 'css'], // Applied from right to left.
-        include: PATHS.app // Specify target directory.
-      },
-
       /* js(x) */
       {
         test: /\.jsx?$/,
@@ -40,6 +34,8 @@ var common = {
   },
 
   plugins: [
+    // Automatically generate HTML which
+    // loads the built bundles.
     new HtmlWebpackPlugin({
       title: 'Kanban app'
     })
@@ -53,6 +49,17 @@ if (TARGET === 'start' || ! TARGET) {
     output: {
       path: PATHS.build,
       filename: 'bundle.js'
+    },
+
+    module: {
+      loaders: [
+        /* css */ // Inline CSS to JavaScript.
+        {
+          test: /\.css$/,
+          loaders: ['style', 'css'], // Applied from right to left.
+          include: PATHS.app
+        }
+      ]
     },
 
     // devtool: 'eval-source-map',
@@ -93,10 +100,23 @@ if (TARGET === 'build') {
       filename: '[name].[chunkhash].js'
     },
 
+    module: {
+      loaders: [
+        /* css */ // Separate CSS files.
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract('style', 'css'),
+          include: PATHS.app
+        }
+      ]
+    },
+
     devtool: 'source-map',
 
     plugins: [
       new Clean(['build']),
+
+      new ExtractTextPlugin('styles.[chunkhash].css'),
 
       // Replace environment variables (NODE_ENV) in sources
       // with the specified values ("production").
