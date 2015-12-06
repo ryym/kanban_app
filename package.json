@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Sample app with Webpack and React by SurviveJS tutorial",
   "homepage": "http://survivejs.com/",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
