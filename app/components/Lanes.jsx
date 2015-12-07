@@ -1,7 +1,7 @@
 import React from 'react';
 import Lane from './Lane.jsx';
 
-export default class Lanes extends React.Component {
+class Lanes extends React.Component {
   render() {
     const lanes = this.props.items;
     return (
@@ -17,3 +17,12 @@ export default class Lanes extends React.Component {
     );
   }
 }
+
+Lanes.propTypes = {
+  items: React.PropTypes.array
+};
+Lanes.defaultProps = {
+  items: []
+};
+
+export default Lanes;
