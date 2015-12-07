@@ -2,7 +2,7 @@ import React from 'react';
 import * as u from '../util.js';
 
 // A generic component which can be edited and deleted.
-export default class Editable extends React.Component {
+class Editable extends React.Component {
   constructor(props) {
     super(props);
 
@@ -82,3 +82,16 @@ export default class Editable extends React.Component {
     this.props.onDelete(e);
   }
 }
+
+Editable.propTypes = {
+  value: React.PropTypes.string,
+  onEdit: React.PropTypes.func.isRequired,
+  onDelete: React.PropTypes.func,
+};
+
+Editable.defaultProps = {
+  value: '',
+  onEdit: () => {}
+};
+
+export default Editable;
