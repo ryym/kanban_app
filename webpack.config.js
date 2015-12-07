@@ -9,7 +9,8 @@ var pkg = require('./package.json');
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build')
+  build: path.join(__dirname, 'build'),
+  test: path.join(__dirname, 'tests')
 };
 
 // Set the babel's environment variable.
@@ -141,4 +142,40 @@ if (TARGET === 'build' || TARGET === 'stats' || TARGET === 'deploy') {
       })
     ]
   });
+}
+
+if (TARGET === 'test' || TARGET === 'tdd') {
+  module.exports = merge(common, {
+     // karma will set 'entry' and 'output'.
+    entry: {},
+    output: {},
+
+    devtool: 'inline-source-map',
+
+    resolve: {
+      alias: {
+        'app': PATHS.app
+      }
+    },
+
+    module: {
+      preLoaders: [
+        // Needed to use Babel features.
+        {
+          test: /\.jsx?$/,
+          loaders: ['isparta-instrumenter'],
+          include: PATHS.app
+        }
+      ],
+
+      loaders: [
+        {
+          test: /\.jsx?$/,
+          loaders: ['babel'],
+          include: PATHS.test
+        }
+      ]
+
+    }
+  })
 }
