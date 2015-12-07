@@ -11,7 +11,7 @@ describe('Note', () => {
     @DragDropContext(TestBackend)
     class TestContextContainer extends React.Component {
       render() {
-        return <DecoratedComponent {...this.props} />;
+        return <DecoratedComponent {...this.props} id="_" />;
       }
     }
     return TestContextContainer;
