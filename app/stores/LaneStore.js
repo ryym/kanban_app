@@ -90,7 +90,7 @@ class LaneStore {
       this.setState({lanes});
     }
     else {
-      console.warn("Failed to remove note from a lane as it did'nt exist", lanes);
+      console.warn('Failed to remove note from a lane as it did not exist', lanes);
     }
   }
 
