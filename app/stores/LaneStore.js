@@ -58,7 +58,7 @@ class LaneStore {
 
     // Dettach from old lane if the note has attached before.
     const oldLane = this.findLaneWhichHas(noteId);
-    if (oldLane != null) {
+    if (oldLane !== undefined) {
       this.dettachFromLane({
         laneId: oldLane.id,
         noteId: noteId

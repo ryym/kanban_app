@@ -10,7 +10,7 @@ class NoteStore {
     this.exportPublicMethods({
       getLatestNote: this.getLatestNote.bind(this),
       get: this.get.bind(this)
-    })
+    });
   }
 
   create(note) {
