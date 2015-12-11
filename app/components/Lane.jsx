@@ -29,7 +29,7 @@ const noteTarget = {
 @DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
   connectDropTarget: connect.dropTarget()
 }))
-export default class Lane extends React.Component {
+class Lane extends React.Component {
   constructor(props) {
     super(props);
     const lane = props.lane;
@@ -95,4 +95,22 @@ export default class Lane extends React.Component {
     }
   }
 }
+
+const Props = React.PropTypes;
+
+Lane.propTypes = {
+  lane: Props.shape({
+    id: Props.string.isRequired,
+    name: Props.string,
+    notes: Props.array
+  }).isRequired,
+  connectDropTarget: Props.func
+};
+
+Lane.defaultProps = {
+  name: '',
+  notes: []
+};
+
+export default Lane;
 
