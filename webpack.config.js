@@ -25,7 +25,6 @@ var common = {
 
   module: {
     loaders: [
-      /* js(x) */
       {
         test: /\.jsx?$/,
         loaders: ['babel'],
@@ -53,6 +52,13 @@ if (TARGET === 'start' || ! TARGET) {
     },
 
     module: {
+      preLoaders: [
+        {
+          test: /\.jsx?$/,
+          loaders: ['eslint'],
+          include: PATHS.app
+        }
+      ],
       loaders: [
         /* css */ // Inline CSS to JavaScript.
         {
@@ -104,6 +110,13 @@ if (TARGET === 'build' || TARGET === 'stats' || TARGET === 'deploy') {
     },
 
     module: {
+      preLoaders: [
+        {
+          test: /\.jsx?$/,
+          loaders: ['eslint'],
+          include: PATHS.app
+        }
+      ],
       loaders: [
         /* css */ // Separate CSS files.
         {
@@ -164,6 +177,11 @@ if (TARGET === 'test' || TARGET === 'tdd') {
         {
           test: /\.jsx?$/,
           loaders: ['isparta-instrumenter'],
+          include: PATHS.app
+        },
+        {
+          test: /\.jsx?$/,
+          loaders: ['eslint'],
           include: PATHS.app
         }
       ],
