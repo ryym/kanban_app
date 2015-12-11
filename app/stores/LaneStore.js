@@ -58,7 +58,7 @@ class LaneStore {
 
     // Dettach from old lane if the note has attached before.
     const oldLane = this.findLaneWhichHas(noteId);
-    if (oldLane != null) {
+    if (oldLane !== undefined) {
       this.dettachFromLane({
         laneId: oldLane.id,
         noteId: noteId
@@ -90,7 +90,7 @@ class LaneStore {
       this.setState({lanes});
     }
     else {
-      console.warn("Failed to remove note from a lane as it did'nt exist", lanes);
+      console.warn('Failed to remove note from a lane as it did not exist', lanes);
     }
   }
 
